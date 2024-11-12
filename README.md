@@ -1,6 +1,6 @@
 # Project 2: Identifying Key Predictors of Smoking Abstinence through Lasso Regression and Best Subset Modeling
 
-## Overview / Aims
+## Overview
 
 This project, in collaboration with Dr. George Papandonatos from Brown University’s Biostatistics Department, explores factors impacting smoking cessation in adults with major depressive disorder (MDD). 
 In our analysis, we examined baseline characteristics as potential moderators of treatment effects on end-of-treatment abstinence, applying Lasso and Best Subset regression models to uncover key predictors. 
@@ -25,7 +25,7 @@ The project uses R (version 4.2.3) for analysis. The following R packages are re
 - `pROC` (version 1.18.5)
 - `L0Learn` (version 2.1.0)
 - `glmnet` (version 4.1-8)
-- `randomForest (version 4.7-1.1)
+- `randomForest` (version 4.7-1.1)
 - `reshape2`(version 1.4.4)
 - `kableExtra` (version 1.4.0)
 - `caret` (version 6.0-94)
