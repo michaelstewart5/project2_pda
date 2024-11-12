@@ -30,3 +30,4 @@ The project uses R (version 4.2.3) for analysis. The following R packages are re
 - `kableExtra` (version 1.4.0)
 - `caret` (version 6.0-94)
 - `corrplot` (version 0.92)
+- `mice` (version 3.16.0)
