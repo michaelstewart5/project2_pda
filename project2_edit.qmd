@@ -348,7 +348,7 @@ To complement our Lasso analysis, we applied Best Subset regression, which sorts
 
 **Table 3** shows the non-zero coefficients selected by Lasso, showing the variables with significant associations in the model. Notably, NHW (Non-Hispanic White) has the highest positive coefficient (10.52, SE = 0.23), suggesting a significant impact on the outcome. NMR also shows a positive coefficient (0.27, SE = 0.66), but its relatively high standard error makes this effect less certain. Among treatment variables, ST + Varenicline has a negligible positive coefficient (0.001, SE = 0.04), indicating little effect. In contrast, treatment ST + Placebo and treatment BASC + Placebo have large negative coefficients (-0.73 and -1.11, with SEs of 0.07 and 0.06, respectively), suggesting these treatment combinations are strongly associated with lower probabilities of abstinence. Treatment ST + Placebo and treatment BASC + Placebo show large negative associations, while ST + Varenicline has a near-zero effect, suggesting different treatment combinations may have varying impacts on the outcome.
 
-Moreover, the negative associations for some college or technical school education (educationSome college/technical school), current major depressive episode (mde_curr1), other psychiatric diagnoses (otherdiag1), and FTCD score (a measure of nicotine dependence) suggest that these factors may reduce the likelihood of abstinence, which seems theoretically sound. 
+Moreover, the negative associations for some college or technical school education (educationSome college/technical school), current major depressive episode (mde_curr1), other psychiatric diagnoses (otherdiag1), and FTCD score (a measure of nicotine dependence) suggest that these factors may reduce the likelihood of abstinence, which seems theoretically sound.
 
 ```{r lasso}
 
@@ -418,9 +418,11 @@ lasso_table
 
 
 ```
+
 The ROC curves for the Lasso model across the five imputed datasets indicate a consistent performance, with each curve closely following a similar trajectory. The mean AUC of 0.721 and a standard deviation of 0.009 suggest moderate predictive accuracy and low variability between imputations.
 
 These results indicate that the Lasso model has stable sensitivity and specificity across the different datasets, with its predictive ability being relatively consistent regardless of data imputation. The small standard deviation also reinforces the reliability of the AUC estimate across multiple imputations, providing confidence in the model’s predictive power for the chosen variables.
+
 ```{r roc-curve}
 library(viridis)
 
@@ -453,8 +455,8 @@ legend("bottomright", legend = paste("Imputed Dataset", 1:m),
 
 
 ```
-In this calibration plot for the Lasso model below, using 5 bins, the black loess curve shows underestimation at both low and high expected proportions, while there is overestimation in the middle range The blue dotted line represents a linear fit, capturing the overall trend of observed vs. expected proportions with a slightly different slope from the ideal line. The linear fit closely aligns with the overall trend. However there are some deviations in calibration accuracy at the extremes.
 
+In this calibration plot for the Lasso model below, using 5 bins, the black loess curve shows underestimation at both low and high expected proportions, while there is overestimation in the middle range The blue dotted line represents a linear fit, capturing the overall trend of observed vs. expected proportions with a slightly different slope from the ideal line. The linear fit closely aligns with the overall trend. However there are some deviations in calibration accuracy at the extremes.
 
 ```{r}
 
@@ -491,7 +493,8 @@ ggplot(calibration_data, aes(x = expected, y = observed)) +
 
 
 ```
-### 5.2 Best Subset Results 
+
+### 5.2 Best Subset Results
 
 The Best Subset model provides some insights into predictors of smoking abstinence. In **Table 4**, The “BASC + Placebo” treatment group shows a strong negative impact on abstinence, with a large negative coefficient (-2.06) and a low standard error (0.10), indicating a stable, significant association. Similarly, the “ST + Placebo” group also has a negative association with abstinence (-1.42), though slightly smaller in effect size and with a bit more variability (standard error of 0.15).
 
@@ -501,7 +504,7 @@ Being non-Hispanic White (NHW1) is positively linked to abstinence (0.92), sugge
 
 The nicotine metabolism ratio (NMR) has a positive coefficient (0.26) but a high standard error (0.95), pointing to potential variability / inconsistencies across imputations.
 
-Overall, while the findings generally align with expected effects (like the impact of nicotine dependence and treatment with placebo), the high standard errors for some predictors, such as NMR, show some instbaility in prediction. 
+Overall, while the findings generally align with expected effects (like the impact of nicotine dependence and treatment with placebo), the high standard errors for some predictors, such as NMR, show some instbaility in prediction.
 
 ```{r best-subset}
 # set up train-test split (80% train, 20% test)
@@ -581,7 +584,8 @@ best_sub_table <- kable(best_subset_selected_sorted,
 best_sub_table
 
 ```
-The ROC curves for the Best Subset model across the five imputed datasets indicate consistent performance, with an average AUC of 0.728 and a low standard deviation (0.004). This suggests that the model’s predictive accuracy and discrimination is stable and reliable across multiple imputations. 
+
+The ROC curves for the Best Subset model across the five imputed datasets indicate consistent performance, with an average AUC of 0.728 and a low standard deviation (0.004). This suggests that the model’s predictive accuracy and discrimination is stable and reliable across multiple imputations.
 
 ```{r roc-curve-bestsubset}
 
@@ -662,16 +666,14 @@ ggplot(calibration_data_best_subset, aes(x = expected, y = observed)) +
 
 ```
 
-
-
 ### 5.3 Comparison
 
-Both models identified Non-Hispanic White (NHW) status, NMR (nicotine metabolism ratio), FTCD score, and the treatment conditions ST + Placebo and BASC + Placebo as significant variables, suggesting these factors play a consistent role in predicting abstinence. Lasso selected additional variables that the Best Subset model did not, such as income (Unknown), current Major Depressive Episode (MDE), education level (Some college/technical school), and other diagnoses (Otherdiag). 
+Both models identified Non-Hispanic White (NHW) status, NMR (nicotine metabolism ratio), FTCD score, and the treatment conditions ST + Placebo and BASC + Placebo as significant variables, suggesting these factors play a consistent role in predicting abstinence. Lasso selected additional variables that the Best Subset model did not, such as income (Unknown), current Major Depressive Episode (MDE), education level (Some college/technical school), and other diagnoses (Otherdiag).
 
 The ROC curves and AUC values for both models demonstrated similar predictive strength, with Lasso achieving a mean AUC of 0.721 (SD: 0.009) and Best Subset slightly higher at 0.728 (SD: 0.004). Calibration plots for each model indicated a pattern of underestimation at the extremes of expected probabilities and a tendency to overestimate in the mid-range. Lasso exhibited tighter calibration overall, perhaps due to its inclusion of additional variables.
 
-
 ## 6. Conclusion and Limitations
+
 Our analysis identified treatment type and nicotine dependence (ftcd_score) as key predictors of smoking cessation in adults with MDD. Both Lasso and Best Subset models consistently highlighted these variables, aligning with the correlation heatmap, which showed their association with cessation outcomes. However, chi-square tests emphasized demographic factors like race, education, and menthol use rather than treatment type, suggesting these characteristics are related to smoking behavior but may have limited predictive power for cessation success.
 
 This project has some limitations. Lasso’s regularization can exclude weaker predictors, potentially missing subtle effects, while Best Subset risks overfitting by testing all combinations. The calibration plots, particularly for the Best Subset model, also revealed significant deviations that suggest overfitting. With a relatively high number of predictors and a limited sample size, the risk of overfitting was heightened, as small datasets often struggle with generalizability. These limitations suggest that future work might benefit from external validation sets or incorporating non-linear models to improve stability and generalizability.
